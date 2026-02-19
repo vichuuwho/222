@@ -15,10 +15,10 @@ function openGift() {
     setTimeout(() => {
         box.classList.remove("shake");
 
-        // плавное "выпрыгивание"
+        // "выпрыгивание"
         image.style.transform = "scale(1.4)";
         setTimeout(() => {
-            image.src = "images/open.jpg"; // открытая коробка
+            image.src = "images/open.jpg";
             image.style.transform = "scale(1)";
         }, 150);
 
@@ -33,7 +33,7 @@ function openGift() {
     }, 1000);
 }
 
-// ловим touch для мобильных
+// для мобильных
 const giftContainer = document.getElementById("giftContainer");
 giftContainer.addEventListener("touchstart", openGift, {passive: true});
 
@@ -80,7 +80,7 @@ function launchConfetti() {
     update();
 }
 
-// Фоновые звезды
+// Фоновые звёздочки
 function animateFloatingImages() {
     const container = document.getElementById("floatingImages");
     const imgSources = ["images/star.png"];

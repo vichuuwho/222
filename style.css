@@ -15,7 +15,7 @@ body {
     text-align: center;
     width: 90%;
     max-width: 400px;
-    z-index: 100; /* коробка выше всего */
+    z-index: 10; /* коробка ниже конфетти */
     pointer-events: auto;
 }
 
@@ -64,7 +64,7 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 10; /* под коробкой */
+    z-index: 5; /* под коробкой */
 }
 
 .float-img {
@@ -81,6 +81,6 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 5; /* ниже контейнера с коробкой */
+    z-index: 20; /* НАД коробкой */
     pointer-events: none;
 }
