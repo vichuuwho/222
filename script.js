@@ -6,7 +6,7 @@ function openGift() {
 
     const box = document.getElementById("giftBox");
     const image = document.getElementById("boxImage");
-    const openText = document.querySelector(".open-text");
+    const openText = document.getElementById("openText");
 
     // тряска коробки
     box.classList.add("shake");
@@ -87,7 +87,7 @@ function animateFloatingImages() {
 
     for (let i = 0; i < count; i++) {
         const img = document.createElement("img");
-        img.src = imgSources[Math.floor(Math.random() * imgSources.length)];
+        img.src = imgSources[0];
         img.classList.add("float-img");
 
         img.style.left = Math.random() * window.innerWidth + "px";
@@ -96,10 +96,10 @@ function animateFloatingImages() {
         container.appendChild(img);
 
         let angle = Math.random() * Math.PI * 2;
-        let amplitude = 5 + Math.random() * 5; // меньше амплитуда для плавного качания
+        let amplitude = 5 + Math.random() * 5;
 
         function float() {
-            angle += 0.02 + Math.random() * 0.01;
+            angle += 0.03; // скорость качания
             img.style.transform = `translateX(${Math.sin(angle) * amplitude}px)`;
             requestAnimationFrame(float);
         }
