@@ -1,0 +1,85 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(180deg, #b7d8b7, #6b1e2f);
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    padding-top: 12vh;
+}
+
+.title {
+    color: #6b1e2f;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.open-text {
+    color: #6b1e2f;
+    font-size: 18px;
+    margin-bottom: 10px;
+    animation: pulse 1.5s infinite;
+}
+
+/* лёгкая пульсация текста */
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+.gift-box img {
+    width: 200px;
+    transition: transform 0.3s ease;
+}
+
+/* АНИМАЦИЯ ТРЯСКИ */
+.shake {
+    animation: shake 0.1s infinite;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+.message {
+    margin-top: 30px;
+    font-size: 20px;
+    color: white;
+    padding: 15px;
+    animation: fadeIn 1s ease forwards;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#confetti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; /* чтобы можно было нажимать на коробку */
+    z-index: 10; /* поверх всего */
+}
+
+
