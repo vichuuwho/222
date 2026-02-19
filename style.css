@@ -2,46 +2,36 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-
-    /* ПАСТЕЛЬНЫЙ ГРАДИЕНТ */
     background: linear-gradient(180deg, #b7d8b7, #6b1e2f);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 100vh;
     overflow: hidden;
 }
 
-/* Контейнер с коробкой */
+/* КОНТЕЙНЕР С КОРОБКОЙ */
 .container {
-    position: absolute;  /* абсолютно на весь экран */
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     width: 90%;
     max-width: 400px;
-    z-index: 100;  /* выше всех */
-    pointer-events: auto;  /* обязательно */
+    z-index: 100;  /* выше всего */
+    pointer-events: auto;
 }
 
-/* ЗАГОЛОВОК */
 .title {
     color: #6b1e2f;
     font-size: 32px;
     margin-bottom: 15px;
 }
 
-/* ОТКРОЙ */
 .open-text {
     color: #6b1e2f;
     font-size: 20px;
     margin-bottom: 15px;
     animation: pulse 1.5s infinite;
-    opacity: 1; /* ОБЯЗАТЕЛЬНО, чтобы JS мог менять */
-    transition: opacity 1.5s ease; /* плавное исчезновение */
+    opacity: 1;
+    transition: opacity 1.5s ease;
 }
 
 @keyframes pulse {
@@ -50,12 +40,10 @@ body {
     100% { opacity: 0.6; }
 }
 
-/* КОРОБКА */
 .gift-box img {
     width: 220px;
 }
 
-/* ТРЯСКА */
 .shake {
     animation: shake 0.1s infinite;
 }
@@ -68,7 +56,6 @@ body {
     100% { transform: translateX(0); }
 }
 
-/* ТЕКСТ ПОСЛЕ ОТКРЫТИЯ */
 .message {
     margin-top: 25px;
     font-size: 22px;
@@ -82,34 +69,29 @@ body {
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* ФОН-КАРТИНКА (если используешь) */
-.background-decor {
+/* Фоновые маленькие картинки */
+.floating-images {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-
-    background-image: url("images/background.png");
-    background-size: cover;        /* чтобы не было квадратов */
-    background-repeat: no-repeat;  /* убрать повтор */
-    background-position: center;
-
-    opacity: 0.15;
-    z-index: -1;
+    pointer-events: none;
+    z-index: 10;
 }
 
-/* КОНФЕТТИ */
+.float-img {
+    position: absolute;
+    width: 30px;
+    transition: transform 1s ease-in-out;
+    opacity: 0.7;
+}
+
+/* Canvas конфетти */
 #confetti {
     position: fixed;
     top: 0;
@@ -117,26 +99,5 @@ body {
     width: 100vw;
     height: 100vh;
     z-index: 20;
-    pointer-events: none; /* фон не мешает */
+    pointer-events: none;
 }
-
-.floating-images {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    pointer-events: none; /* фон не мешает */
-}
-
-.float-img {
-    position: absolute;
-    width: 30px;  
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: transform 1s ease-in-out;
-    opacity: 0.7;
-}
-

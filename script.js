@@ -8,62 +8,94 @@ function openGift() {
     const image = document.getElementById("boxImage");
     const openText = document.querySelector(".open-text");
 
-    // добавляем тряску
+    // тряска коробки
     box.classList.add("shake");
 
-    // через 1 секунду останавливаем тряску и открываем
     setTimeout(() => {
         box.classList.remove("shake");
-
-        // 🔽 твоя открытая коробка
-        image.src = "images/box-open.png";
-
+        image.src = "images/open.jpg"; // открытая коробка
         document.getElementById("message").classList.remove("hidden");
-
-        // надпись "Открой!" постепенно исчезает
-        openText.style.transition = "opacity 1.5s ease";
-        openText.style.opacity = 0;
+        openText.style.opacity = 0; // исчезновение надписи
 
         launchConfetti();
+        animateFloatingImages();
     }, 1000);
+}
 
-// фикс для мобильных устройств
-const giftBox = document.getElementById("giftBox");
-giftBox.addEventListener("touchstart", openGift, {passive: true});
+// фикс для мобильных
+const giftContainer = document.getElementById("giftContainer");
+giftContainer.addEventListener("touchstart", openGift, {passive: true});
 
+// Конфетти
+function launchConfetti() {
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
 
-// после конфетти
-animateFloatingImages();
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
 
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    const colors = ["#ffffff", "#b7d8b7", "#6b1e2f", "#f9d5d3", "#ffe2b3"];
+    let pieces = [];
+
+    for (let i = 0; i < 120; i++) {
+        pieces.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * -canvas.height,
+            size: Math.random() * 8 + 4,
+            speed: Math.random() * 2 + 2,
+            color: colors[Math.floor(Math.random() * colors.length)]
+        });
+    }
+
+    function update() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        pieces.forEach(p => {
+            ctx.fillStyle = p.color;
+            ctx.fillRect(p.x, p.y, p.size, p.size);
+            p.y += p.speed;
+            if (p.y > canvas.height) {
+                p.y = -10;
+                p.x = Math.random() * canvas.width;
+            }
+        });
+
+        requestAnimationFrame(update);
+    }
+
+    update();
+}
+
+// Фоновые маленькие картинки
 function animateFloatingImages() {
     const container = document.getElementById("floatingImages");
 
     const imgSources = [
-        "images/star1.png",
-        "images/star2.png",
-        "images/star3.png",
-        "images/star4.png"
+        "images/star.png",
     ];
 
-    const count = 25; // количество маленьких картинок
+    const count = 25;
 
     for (let i = 0; i < count; i++) {
         const img = document.createElement("img");
         img.src = imgSources[Math.floor(Math.random() * imgSources.length)];
         img.classList.add("float-img");
 
-        // случайное начальное положение
         img.style.left = Math.random() * window.innerWidth + "px";
         img.style.top = Math.random() * window.innerHeight + "px";
 
         container.appendChild(img);
 
-        // анимация движения туда-сюда
         let angle = Math.random() * Math.PI * 2;
-        let amplitude = 10 + Math.random() * 10; // 10–20 пикселей
+        let amplitude = 10 + Math.random() * 10;
 
         function float() {
-            angle += 0.02 + Math.random() * 0.01; // разная скорость
+            angle += 0.02 + Math.random() * 0.01;
             img.style.transform = `translateX(${Math.sin(angle) * amplitude}px)`;
             requestAnimationFrame(float);
         }
