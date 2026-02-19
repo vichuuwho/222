@@ -19,6 +19,9 @@ body {
     text-align: center;
     width: 90%;
     max-width: 400px;
+
+    position: relative;   /* добавляем */
+    z-index: 20;          /* выше, чем у конфетти (10) и маленьких картинок (5) */
 }
 
 /* ЗАГОЛОВОК */
