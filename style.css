@@ -2,12 +2,12 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    /* ПРАВИЛЬНЫЙ ГРАДИЕНТ */
+    /* ГРАДИЕНТ ОТ ЗЕЛЁНОГО К БОРДОВОМУ */
     background: linear-gradient(180deg, #b7d8b7 0%, #6b1e2f 100%);
     overflow: hidden;
 }
 
-/* Контейнер с коробкой */
+/* контейнер с коробкой */
 .container {
     position: absolute;
     top: 50%;
@@ -24,8 +24,8 @@ body {
     color: #6b1e2f;
     font-size: 20px;
     margin-bottom: 15px;
-    opacity: 1; /* стартовое значение */
-    transition: opacity 1.5s ease;
+    opacity: 1;
+    transition: opacity 1s ease;
 }
 
 .gift-box img {
@@ -57,7 +57,7 @@ body {
     display: none;
 }
 
-/* Фоновые маленькие картинки */
+/* фоновые маленькие картинки */
 .floating-images {
     position: fixed;
     top: 0;
@@ -72,6 +72,8 @@ body {
     position: absolute;
     width: 30px;
     opacity: 0.7;
+    /* начальная трансформация для плавного качания */
+    transform: translateX(0);
 }
 
 /* Canvas конфетти */

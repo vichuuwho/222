@@ -7,6 +7,7 @@ function openGift() {
     const box = document.getElementById("giftBox");
     const image = document.getElementById("boxImage");
     const openText = document.getElementById("openText");
+    const message = document.getElementById("message");
 
     // тряска коробки
     box.classList.add("shake");
@@ -14,25 +15,25 @@ function openGift() {
     setTimeout(() => {
         box.classList.remove("shake");
 
-        // плавное «выпрыгивание» коробки
+        // плавное "выпрыгивание"
         image.style.transform = "scale(1.4)";
         setTimeout(() => {
             image.src = "images/open.jpg"; // открытая коробка
-            image.style.transform = "scale(1)"; // обратно к нормальному размеру
+            image.style.transform = "scale(1)";
         }, 150);
 
-        // надпись исчезает
+        // исчезновение надписи "Открой!"
         openText.style.opacity = 0;
 
-        // показываем поздравления
-        document.getElementById("message").classList.remove("hidden");
+        // показываем поздравление
+        message.classList.remove("hidden");
 
         launchConfetti();
         animateFloatingImages();
     }, 1000);
 }
 
-// фикс для мобильных
+// ловим touch для мобильных
 const giftContainer = document.getElementById("giftContainer");
 giftContainer.addEventListener("touchstart", openGift, {passive: true});
 
@@ -79,7 +80,7 @@ function launchConfetti() {
     update();
 }
 
-// Фоновые маленькие картинки
+// Фоновые звезды
 function animateFloatingImages() {
     const container = document.getElementById("floatingImages");
     const imgSources = ["images/star.png"];
@@ -95,11 +96,12 @@ function animateFloatingImages() {
 
         container.appendChild(img);
 
+        // плавное качание
         let angle = Math.random() * Math.PI * 2;
         let amplitude = 5 + Math.random() * 5;
 
         function float() {
-            angle += 0.03; // скорость качания
+            angle += 0.02;
             img.style.transform = `translateX(${Math.sin(angle) * amplitude}px)`;
             requestAnimationFrame(float);
         }
