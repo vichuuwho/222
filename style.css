@@ -6,7 +6,7 @@ body {
     overflow: hidden;
 }
 
-/* КОНТЕЙНЕР С КОРОБКОЙ */
+/* Контейнер с коробкой */
 .container {
     position: absolute;
     top: 50%;
@@ -15,14 +15,8 @@ body {
     text-align: center;
     width: 90%;
     max-width: 400px;
-    z-index: 100;  /* выше всего */
+    z-index: 100;
     pointer-events: auto;
-}
-
-.title {
-    color: #6b1e2f;
-    font-size: 32px;
-    margin-bottom: 15px;
 }
 
 .open-text {
@@ -42,6 +36,7 @@ body {
 
 .gift-box img {
     width: 220px;
+    transition: transform 0.3s ease;
 }
 
 .shake {

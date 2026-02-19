@@ -13,9 +13,19 @@ function openGift() {
 
     setTimeout(() => {
         box.classList.remove("shake");
-        image.src = "images/open.jpg"; // открытая коробка
+
+        // плавное «выпрыгивание» коробки
+        image.style.transform = "scale(1.4)";
+        setTimeout(() => {
+            image.src = "images/open.jpg"; // открытая коробка
+            image.style.transform = "scale(1)"; // обратно к нормальному размеру
+        }, 150);
+
+        // надпись исчезает
+        openText.style.opacity = 0;
+
+        // показываем поздравления
         document.getElementById("message").classList.remove("hidden");
-        openText.style.opacity = 0; // исчезновение надписи
 
         launchConfetti();
         animateFloatingImages();
@@ -54,7 +64,6 @@ function launchConfetti() {
 
     function update() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
         pieces.forEach(p => {
             ctx.fillStyle = p.color;
             ctx.fillRect(p.x, p.y, p.size, p.size);
@@ -64,7 +73,6 @@ function launchConfetti() {
                 p.x = Math.random() * canvas.width;
             }
         });
-
         requestAnimationFrame(update);
     }
 
@@ -74,11 +82,7 @@ function launchConfetti() {
 // Фоновые маленькие картинки
 function animateFloatingImages() {
     const container = document.getElementById("floatingImages");
-
-    const imgSources = [
-        "images/star.png",
-    ];
-
+    const imgSources = ["images/star.png"];
     const count = 25;
 
     for (let i = 0; i < count; i++) {
@@ -92,7 +96,7 @@ function animateFloatingImages() {
         container.appendChild(img);
 
         let angle = Math.random() * Math.PI * 2;
-        let amplitude = 10 + Math.random() * 10;
+        let amplitude = 5 + Math.random() * 5; // меньше амплитуда для плавного качания
 
         function float() {
             angle += 0.02 + Math.random() * 0.01;
