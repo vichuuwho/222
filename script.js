@@ -27,6 +27,11 @@ function openGift() {
         launchConfetti();
     }, 1000);
 
+// фикс для мобильных устройств
+const giftBox = document.getElementById("giftBox");
+giftBox.addEventListener("touchstart", openGift, {passive: true});
+
+
 // после конфетти
 animateFloatingImages();
 
