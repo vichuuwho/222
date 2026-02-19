@@ -26,6 +26,34 @@ function openGift() {
 
         launchConfetti();
     }, 1000);
+
+   // После конфетти
+animateFloatingImages();
+
+function animateFloatingImages() {
+    const imgs = document.querySelectorAll(".float-img");
+
+    imgs.forEach((img, i) => {
+        // начальная случайная позиция
+        const startX = Math.random() * window.innerWidth * 0.8 + window.innerWidth * 0.1;
+        const startY = Math.random() * window.innerHeight * 0.8 + window.innerHeight * 0.1;
+        img.style.left = startX + "px";
+        img.style.top = startY + "px";
+
+        // движение туда-сюда
+        let angle = Math.random() * Math.PI * 2;
+
+        function float() {
+            angle += 0.02; // скорость вращения
+            const amplitude = 10; // сколько пикселей влево-вправо
+            img.style.transform = `translate(-50%, -50%) translateX(${Math.sin(angle) * amplitude}px)`;
+            requestAnimationFrame(float);
+        }
+
+        float();
+    });
+}
+
 }
 
 function launchConfetti() {
