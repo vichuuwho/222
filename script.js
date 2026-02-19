@@ -22,7 +22,7 @@ function openGift() {
             image.style.transform = "scale(1)";
         }, 150);
 
-        // исчезновение надписи "Открой!"
+        // надпись исчезает
         openText.style.opacity = 0;
 
         // показываем поздравление
