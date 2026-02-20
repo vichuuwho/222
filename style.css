@@ -12,6 +12,8 @@ body {
     background-image: url("images/back_total.PNG");
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     overflow: hidden;
 }
 
@@ -138,6 +140,14 @@ body {
     position: absolute;
     width: 30px;
     opacity: 0.7;
+    animation: floatSway 6s ease-in-out infinite;
+}
+
+@keyframes floatSway {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    25% { transform: translateX(var(--sway-x, 4px)) translateY(var(--sway-y, 2px)); }
+    50% { transform: translateX(0) translateY(0); }
+    75% { transform: translateX(calc(-1 * var(--sway-x, 4px))) translateY(calc(-1 * var(--sway-y, 2px))); }
 }
 
 /* Вылетающие звёздочки из коробки */

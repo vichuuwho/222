@@ -144,16 +144,10 @@ function animateFloatingImages() {
 
         img.style.left = Math.random() * window.innerWidth + "px";
         img.style.top = Math.random() * window.innerHeight + "px";
+        img.style.setProperty("--sway-x", (2 + Math.random() * 3) + "px");
+        img.style.setProperty("--sway-y", (1 + Math.random() * 2) + "px");
+        img.style.animationDelay = (Math.random() * 2) + "s";
 
         container.appendChild(img);
-
-        var state = { angle: Math.random() * Math.PI * 2, amplitude: 5 + Math.random() * 5 };
-
-        function float() {
-            state.angle += 0.02;
-            img.style.transform = "translateX(" + (Math.sin(state.angle) * state.amplitude) + "px)";
-            requestAnimationFrame(float);
-        }
-        float();
     }
 }
