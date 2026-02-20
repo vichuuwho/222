@@ -40,7 +40,7 @@ body::before {
     );
 }
 
-/* контейнер */
+/* контейнер — выше конфетти, чтобы клики проходили */
 .container {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
@@ -51,7 +51,7 @@ body::before {
     text-align: center;
     width: 90%;
     max-width: 400px;
-    z-index: 10;
+    z-index: 30;
     pointer-events: auto;
     cursor: pointer;
 }
@@ -205,7 +205,7 @@ body::before {
     margin-top: -12px;
 }
 
-/* конфетти */
+/* конфетти — под контейнером, чтобы не перехватывать клики */
 #confetti {
     position: fixed;
     top: 0;
