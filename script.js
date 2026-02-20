@@ -133,34 +133,46 @@ function launchConfetti() {
     update();
 }
 
+var floatStars = [];
+
 function animateFloatingImages() {
     var container = document.getElementById("floatingImages");
+    if (!container) return;
+    container.innerHTML = "";
+
     var count = 25;
+    var w = window.innerWidth;
+    var h = window.innerHeight;
 
     for (var i = 0; i < count; i++) {
         var img = document.createElement("img");
         img.src = STAR_IMAGE;
+        img.alt = "";
         img.className = "float-img";
-
-        img.style.left = Math.random() * window.innerWidth + "px";
-        img.style.top = Math.random() * window.innerHeight + "px";
+        img.style.position = "absolute";
+        img.style.left = (Math.random() * (w - 30) + 5) + "px";
+        img.style.top = (Math.random() * (h - 30) + 5) + "px";
 
         container.appendChild(img);
 
-        (function(el) {
-            var angle = Math.random() * Math.PI * 2;
-            var ampX = 2 + Math.random() * 3;
-            var ampY = 1 + Math.random() * 2;
-            var speed = 0.006 + Math.random() * 0.004;
-
-            function sway() {
-                angle += speed;
-                var x = Math.sin(angle) * ampX;
-                var y = Math.sin(angle * 1.3) * ampY;
-                el.style.transform = "translate(" + x + "px," + y + "px)";
-                requestAnimationFrame(sway);
-            }
-            sway();
-        })(img);
+        floatStars.push({
+            el: img,
+            angle: Math.random() * Math.PI * 2,
+            ampX: 2 + Math.random() * 2,
+            ampY: 1 + Math.random() * 1.5,
+            speed: 0.004 + Math.random() * 0.003
+        });
     }
+
+    function updateAll() {
+        for (var j = 0; j < floatStars.length; j++) {
+            var s = floatStars[j];
+            s.angle += s.speed;
+            var x = Math.sin(s.angle) * s.ampX;
+            var y = Math.sin(s.angle * 1.3) * s.ampY;
+            s.el.style.transform = "translate(" + x + "px," + y + "px)";
+        }
+        requestAnimationFrame(updateAll);
+    }
+    updateAll();
 }
