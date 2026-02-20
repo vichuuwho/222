@@ -1,7 +1,62 @@
 let opened = false;
+const STAR_IMAGE = "images/star.png"; // Замени на свою картинку звёздочки
+
+// Вылет звёздочек из точки (centerX, centerY)
+function launchStars(centerX, centerY, count = 15) {
+    const starCount = count;
+    const stars = [];
+
+    for (let i = 0; i < starCount; i++) {
+        const img = document.createElement("img");
+        img.src = STAR_IMAGE;
+        img.alt = "";
+        img.classList.add("star-burst");
+
+        const angle = (Math.PI * 2 * i) / starCount + Math.random() * 0.5;
+        const distance = 80 + Math.random() * 120;
+        const endX = Math.cos(angle) * distance;
+        const endY = Math.sin(angle) * distance;
+
+        img.style.left = centerX + "px";
+        img.style.top = centerY + "px";
+        img.style.setProperty("--end-x", endX + "px");
+        img.style.setProperty("--end-y", endY + "px");
+
+        document.body.appendChild(img);
+        stars.push({ el: img, endX, endY });
+    }
+
+    // Анимация через requestAnimationFrame
+    requestAnimationFrame(() => {
+        stars.forEach(({ el, endX, endY }) => {
+            el.style.transition = "transform 1s ease-out, opacity 1s ease-out";
+            el.style.transform = `translate(${endX}px, ${endY}px) scale(1.2)`;
+            el.style.opacity = "0";
+        });
+
+        setTimeout(() => {
+            stars.forEach(({ el }) => el.remove());
+        }, 1100);
+    });
+}
 
 function openGift() {
-    if (opened) return;
+    if (opened) {
+        // Уже открыта — тряска + звёзды
+        const box = document.getElementById("giftBox");
+        const rect = box.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        box.classList.remove("shake-burst");
+        void box.offsetWidth; // reflow
+        box.classList.add("shake-burst");
+        launchStars(centerX, centerY, 10);
+
+        setTimeout(() => box.classList.remove("shake-burst"), 500);
+        return;
+    }
+
     opened = true;
 
     const box = document.getElementById("giftBox");
@@ -9,33 +64,39 @@ function openGift() {
     const openText = document.getElementById("openText");
     const message = document.getElementById("message");
 
-    // тряска коробки
-    box.classList.add("shake");
+    // Тряска с усилением (2.5 сек)
+    box.classList.add("shake-intensify");
 
     setTimeout(() => {
-        box.classList.remove("shake");
+        box.classList.remove("shake-intensify");
 
         // "выпрыгивание"
         image.style.transform = "scale(1.4)";
         setTimeout(() => {
             image.src = "images/open.jpg";
             image.style.transform = "scale(1)";
+
+            // Звёздочки вылетают из центра коробки
+            const rect = box.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            launchStars(centerX, centerY, 18);
         }, 150);
 
-        // надпись исчезает
         openText.style.opacity = 0;
-
-        // показываем поздравление
         message.classList.remove("hidden");
 
         launchConfetti();
         animateFloatingImages();
-    }, 1000);
+    }, 2500); // совпадает с длительностью shake-intensify
 }
 
-// для мобильных
+// Клик
 const giftContainer = document.getElementById("giftContainer");
-giftContainer.addEventListener("touchstart", openGift, {passive: true});
+giftContainer.addEventListener("click", openGift);
+
+// Мобильные
+giftContainer.addEventListener("touchstart", openGift, { passive: true });
 
 // Конфетти
 function launchConfetti() {
@@ -83,7 +144,7 @@ function launchConfetti() {
 // Фоновые звёздочки
 function animateFloatingImages() {
     const container = document.getElementById("floatingImages");
-    const imgSources = ["images/star.png"];
+    const imgSources = [STAR_IMAGE];
     const count = 25;
 
     for (let i = 0; i < count; i++) {
@@ -96,7 +157,6 @@ function animateFloatingImages() {
 
         container.appendChild(img);
 
-        // плавное качание
         let angle = Math.random() * Math.PI * 2;
         let amplitude = 5 + Math.random() * 5;
 
