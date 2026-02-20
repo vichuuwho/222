@@ -100,19 +100,20 @@ function openGift() {
     }, 2500); // совпадает с длительностью shake-intensify
 }
 
-// Клик / тап (debounce от двойного срабатывания touchstart+click на мобильных)
+// Клик / тап — делегирование на document, чтобы точно ловить события
 const giftContainer = document.getElementById("giftContainer");
 let lastOpenTime = 0;
 
-function handleOpen() {
+function handleOpen(e) {
+    if (!giftContainer.contains(e.target)) return;
     const now = Date.now();
     if (now - lastOpenTime < 350) return;
     lastOpenTime = now;
     openGift();
 }
 
-giftContainer.addEventListener("click", handleOpen);
-giftContainer.addEventListener("touchstart", handleOpen, { passive: true });
+document.addEventListener("click", handleOpen);
+document.addEventListener("touchstart", handleOpen, { passive: true });
 
 // Конфетти
 function launchConfetti() {

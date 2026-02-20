@@ -205,7 +205,7 @@ body::before {
     margin-top: -12px;
 }
 
-/* конфетти — под контейнером, чтобы не перехватывать клики */
+/* конфетти — внизу стека, не перехватывает клики */
 #confetti {
     position: fixed;
     top: 0;
@@ -213,7 +213,7 @@ body::before {
     width: 100vw;
     height: 100vh;
     height: 100dvh;
-    z-index: 20;
+    z-index: 1;
     pointer-events: none;
 }
 
