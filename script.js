@@ -100,16 +100,19 @@ function openGift() {
     }, 2500); // совпадает с длительностью shake-intensify
 }
 
-// Клик / тап (без двойного срабатывания на мобильных)
+// Клик / тап (debounce от двойного срабатывания touchstart+click на мобильных)
 const giftContainer = document.getElementById("giftContainer");
+let lastOpenTime = 0;
 
-function handleOpen(e) {
-    if (e.type === "touchstart") e.preventDefault();
+function handleOpen() {
+    const now = Date.now();
+    if (now - lastOpenTime < 350) return;
+    lastOpenTime = now;
     openGift();
 }
 
 giftContainer.addEventListener("click", handleOpen);
-giftContainer.addEventListener("touchstart", handleOpen, { passive: false });
+giftContainer.addEventListener("touchstart", handleOpen, { passive: true });
 
 // Конфетти
 function launchConfetti() {
