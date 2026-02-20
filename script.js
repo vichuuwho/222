@@ -91,12 +91,16 @@ function openGift() {
     }, 2500); // совпадает с длительностью shake-intensify
 }
 
-// Клик
+// Клик / тап (без двойного срабатывания на мобильных)
 const giftContainer = document.getElementById("giftContainer");
-giftContainer.addEventListener("click", openGift);
 
-// Мобильные
-giftContainer.addEventListener("touchstart", openGift, { passive: true });
+function handleOpen(e) {
+    if (e.type === "touchstart") e.preventDefault();
+    openGift();
+}
+
+giftContainer.addEventListener("click", handleOpen);
+giftContainer.addEventListener("touchstart", handleOpen, { passive: false });
 
 // Конфетти
 function launchConfetti() {
