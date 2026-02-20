@@ -4,40 +4,15 @@
 }
 
 
-html {
-    -webkit-text-size-adjust: 100%;
-}
-
 body {
     margin: 0;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-    min-height: 100vh;
-    min-height: 100dvh;
+    padding: 0;
     font-family: "VerveineCorp", sans-serif;
     background-color: #93c49b;
-    overflow: hidden;
     background-image: url("images/back_total.PNG");
     background-size: cover;
     background-position: center;
-    position: relative;
-}
-
-/* Градиент-свечение сверху: белый → прозрачный */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-    background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.5) 0%,
-        rgba(255, 255, 255, 0.2) 30%,
-        rgba(255, 255, 255, 0) 70%
-    );
+    overflow: hidden;
 }
 
 /* контейнер */
@@ -49,8 +24,8 @@ body::before {
     text-align: center;
     width: 90%;
     max-width: 400px;
-    z-index: 25;
-    cursor: pointer;
+    z-index: 10;
+    pointer-events: auto;
 }
 
 /* ВСЕ тексты */
@@ -99,97 +74,53 @@ body::before {
     display: none;
 }
 
-.gift-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .gift-box img {
     width: 220px;
-    max-width: 100%;
-    display: block;
     transition: transform 0.3s ease;
-    object-fit: contain;
 }
 
-/* Тряска: понемногу → сильнее (перед открытием) */
+/* Постепенная тряска: сначала долго медленно, потом быстро */
 .shake-intensify {
     animation: shakeIntensify 2.5s ease-in forwards;
 }
 
 @keyframes shakeIntensify {
-    0%, 15% {
-        transform: translateX(0) rotate(0deg);
-    }
-    18% { transform: translateX(-3px) rotate(-1deg); }
-    21% { transform: translateX(3px) rotate(1deg); }
-    24% { transform: translateX(-3px) rotate(-1deg); }
-    27% { transform: translateX(3px) rotate(0deg); }
-    30%, 55% {
-        transform: translateX(-6px) rotate(-2deg);
-    }
-    33% { transform: translateX(6px) rotate(2deg); }
-    36% { transform: translateX(-6px) rotate(-2deg); }
-    39% { transform: translateX(6px) rotate(2deg); }
-    42% { transform: translateX(-6px) rotate(-1deg); }
-    45%, 80% {
-        transform: translateX(-10px) rotate(-3deg);
-    }
-    48% { transform: translateX(10px) rotate(3deg); }
-    51% { transform: translateX(-10px) rotate(-3deg); }
-    54% { transform: translateX(10px) rotate(3deg); }
-    57% { transform: translateX(-10px) rotate(-2deg); }
-    60% { transform: translateX(10px) rotate(2deg); }
-    63% { transform: translateX(-12px) rotate(-4deg); }
-    66% { transform: translateX(12px) rotate(4deg); }
-    69% { transform: translateX(-12px) rotate(-4deg); }
-    72% { transform: translateX(12px) rotate(4deg); }
-    75% { transform: translateX(-14px) rotate(-5deg); }
-    78% { transform: translateX(14px) rotate(5deg); }
-    81% { transform: translateX(-14px) rotate(-5deg); }
-    84% { transform: translateX(14px) rotate(5deg); }
-    87% { transform: translateX(-16px) rotate(-6deg); }
-    90% { transform: translateX(16px) rotate(6deg); }
-    93% { transform: translateX(-16px) rotate(-6deg); }
-    96% { transform: translateX(16px) rotate(6deg); }
-    100% { transform: translateX(0) rotate(0deg); }
+    0%, 20% { transform: translateX(0); }
+    22% { transform: translateX(-2px); }
+    24% { transform: translateX(2px); }
+    26% { transform: translateX(-2px); }
+    28%, 45% { transform: translateX(0); }
+    47% { transform: translateX(-4px); }
+    49% { transform: translateX(4px); }
+    51% { transform: translateX(-4px); }
+    53%, 70% { transform: translateX(0); }
+    72% { transform: translateX(-6px); }
+    74% { transform: translateX(6px); }
+    76% { transform: translateX(-6px); }
+    78% { transform: translateX(6px); }
+    80% { transform: translateX(-8px); }
+    82% { transform: translateX(8px); }
+    84% { transform: translateX(-8px); }
+    86% { transform: translateX(8px); }
+    88% { transform: translateX(-6px); }
+    90% { transform: translateX(6px); }
+    92% { transform: translateX(-4px); }
+    94% { transform: translateX(4px); }
+    96% { transform: translateX(-2px); }
+    100% { transform: translateX(0); }
 }
 
-/* Тряска при клике по уже открытой коробке */
+/* Тряска при тапе по открытой коробке */
 .shake-burst {
     animation: shakeBurst 0.5s ease-out;
 }
 
 @keyframes shakeBurst {
     0%, 100% { transform: translateX(0); }
-    10% { transform: translateX(-8px); }
-    20% { transform: translateX(8px); }
-    30% { transform: translateX(-6px); }
-    40% { transform: translateX(6px); }
-    50% { transform: translateX(-4px); }
-    60% { transform: translateX(4px); }
-    70% { transform: translateX(-2px); }
-    80% { transform: translateX(2px); }
-}
-
-/* Кнопка — вся зона для тапа */
-.tap-btn {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9999;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    -webkit-appearance: none;
-    appearance: none;
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
 }
 
 /* фоновые картинки */
@@ -209,7 +140,7 @@ body::before {
     opacity: 0.7;
 }
 
-/* Вылетающие звёздочки (из коробки) — анимация через JS */
+/* Вылетающие звёздочки из коробки */
 .star-burst {
     position: fixed;
     pointer-events: none;
@@ -228,56 +159,6 @@ body::before {
     left: 0;
     width: 100vw;
     height: 100vh;
-    height: 100dvh;
     z-index: 20;
     pointer-events: none;
-}
-
-/* ——— Мобильная версия ——— */
-@media (max-width: 480px) {
-    .top-text-wrap {
-        margin-bottom: 10px;
-    }
-
-    .open-text,
-    .tap-text {
-        font-size: 22px;
-    }
-
-    .message {
-        font-size: 22px;
-        padding: 12px;
-        margin-top: 15px;
-    }
-
-    .gift-box img {
-        width: 180px;
-    }
-
-    .float-img {
-        width: 24px;
-    }
-
-    .star-burst {
-        width: 20px;
-        height: 20px;
-        margin-left: -10px;
-        margin-top: -10px;
-    }
-}
-
-@media (max-height: 600px) {
-    .gift-box img {
-        width: 160px;
-    }
-
-    .open-text,
-    .tap-text {
-        font-size: 20px;
-    }
-
-    .message {
-        font-size: 20px;
-        margin-top: 10px;
-    }
 }

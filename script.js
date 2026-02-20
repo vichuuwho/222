@@ -1,115 +1,99 @@
 let opened = false;
-let isOpening = false; // коробка ещё трясётся перед открытием
-const STAR_IMAGE = "images/star.png"; // Замени на свою картинку звёздочки
+const STAR_IMAGE = "images/star.png";
 
-// Вылет звёздочек из точки (centerX, centerY)
-function launchStars(centerX, centerY, count = 15) {
-    const starCount = count;
-    const stars = [];
-
-    for (let i = 0; i < starCount; i++) {
-        const img = document.createElement("img");
+// Звёздочки вылетают из точки (centerX, centerY)
+function launchStars(centerX, centerY, count) {
+    count = count || 12;
+    for (var i = 0; i < count; i++) {
+        var img = document.createElement("img");
         img.src = STAR_IMAGE;
         img.alt = "";
-        img.classList.add("star-burst");
+        img.className = "star-burst";
 
-        const angle = (Math.PI * 2 * i) / starCount + Math.random() * 0.5;
-        const distance = 80 + Math.random() * 120;
-        const endX = Math.cos(angle) * distance;
-        const endY = Math.sin(angle) * distance;
+        var angle = (Math.PI * 2 * i) / count + Math.random() * 0.5;
+        var distance = 80 + Math.random() * 100;
+        var ex = Math.cos(angle) * distance;
+        var ey = Math.sin(angle) * distance;
 
         img.style.left = centerX + "px";
         img.style.top = centerY + "px";
-        img.style.setProperty("--end-x", endX + "px");
-        img.style.setProperty("--end-y", endY + "px");
 
         document.body.appendChild(img);
-        stars.push({ el: img, endX, endY });
+
+        (function(elm, x, y) {
+            requestAnimationFrame(function() {
+                elm.style.transition = "transform 1s ease-out, opacity 1s ease-out";
+                elm.style.transform = "translate(" + x + "px, " + y + "px) scale(1.2)";
+                elm.style.opacity = "0";
+            });
+            setTimeout(function() { elm.remove(); }, 1100);
+        })(img, ex, ey);
     }
-
-    // Анимация через requestAnimationFrame
-    requestAnimationFrame(() => {
-        stars.forEach(({ el, endX, endY }) => {
-            el.style.transition = "transform 1s ease-out, opacity 1s ease-out";
-            el.style.transform = `translate(${endX}px, ${endY}px) scale(1.2)`;
-            el.style.opacity = "0";
-        });
-
-        setTimeout(() => {
-            stars.forEach(({ el }) => el.remove());
-        }, 1100);
-    });
 }
 
-window.openGift = function openGift() {
-    const box = document.getElementById("giftBox");
-    const rect = box.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
+function openGift() {
+    var box = document.getElementById("giftBox");
+    var rect = box.getBoundingClientRect();
+    var centerX = rect.left + rect.width / 2;
+    var centerY = rect.top + rect.height / 2;
 
     if (opened) {
-        if (isOpening) {
-            // Коробка ещё трясётся — только звёзды, тряску не трогаем
-            launchStars(centerX, centerY, 10);
-            return;
-        }
-        // Полностью открыта — тряска + звёзды
         box.classList.remove("shake-burst");
-        void box.offsetWidth;
+        box.offsetWidth;
         box.classList.add("shake-burst");
         launchStars(centerX, centerY, 10);
-        setTimeout(() => box.classList.remove("shake-burst"), 500);
+        setTimeout(function() { box.classList.remove("shake-burst"); }, 500);
         return;
     }
 
     opened = true;
-    isOpening = true;
 
-    const box = document.getElementById("giftBox");
-    const image = document.getElementById("boxImage");
-    const openText = document.getElementById("openText");
-    const message = document.getElementById("message");
+    var image = document.getElementById("boxImage");
+    var openText = document.getElementById("openText");
+    var message = document.getElementById("message");
 
-    // Тряска с усилением (2.5 сек)
     box.classList.add("shake-intensify");
 
-    setTimeout(() => {
-        isOpening = false;
+    launchStars(centerX, centerY, 4);
+    setTimeout(function() { launchStars(centerX, centerY, 5); }, 600);
+    setTimeout(function() { launchStars(centerX, centerY, 6); }, 1200);
+    setTimeout(function() { launchStars(centerX, centerY, 8); }, 1800);
+    setTimeout(function() { launchStars(centerX, centerY, 10); }, 2200);
+
+    setTimeout(function() {
         box.classList.remove("shake-intensify");
 
-        // "выпрыгивание"
         image.style.transform = "scale(1.4)";
-        setTimeout(() => {
+        setTimeout(function() {
             image.src = "images/open.jpg";
             image.style.transform = "scale(1)";
 
-            // Звёздочки вылетают из центра коробки
-            const rect = box.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            launchStars(centerX, centerY, 18);
+            rect = box.getBoundingClientRect();
+            centerX = rect.left + rect.width / 2;
+            centerY = rect.top + rect.height / 2;
+            launchStars(centerX, centerY, 15);
         }, 150);
 
-        openText.style.opacity = 0;
-        const tapText = document.getElementById("tapText");
-        setTimeout(() => tapText.classList.add("visible"), 1100);
+        openText.style.opacity = "0";
+
+        setTimeout(function() {
+            document.getElementById("tapText").classList.add("visible");
+        }, 1100);
+
         message.classList.remove("hidden");
 
         launchConfetti();
         animateFloatingImages();
-    }, 2500); // совпадает с длительностью shake-intensify
-};
+    }, 2500);
+}
 
+var giftContainer = document.getElementById("giftContainer");
+giftContainer.addEventListener("touchstart", openGift, { passive: true });
+giftContainer.addEventListener("click", openGift);
 
-// Конфетти — создаём canvas только при открытии, чтобы не блокировать клики
 function launchConfetti() {
-    let canvas = document.getElementById("confetti");
-    if (!canvas) {
-        canvas = document.createElement("canvas");
-        canvas.id = "confetti";
-        document.body.appendChild(canvas);
-    }
-    const ctx = canvas.getContext("2d");
+    var canvas = document.getElementById("confetti");
+    var ctx = canvas.getContext("2d");
 
     function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -119,10 +103,10 @@ function launchConfetti() {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    const colors = ["#ffffff", "#b7d8b7", "#6b1e2f", "#f9d5d3", "#ffe2b3"];
-    let pieces = [];
+    var colors = ["#ffffff", "#b7d8b7", "#6b1e2f", "#f9d5d3", "#ffe2b3"];
+    var pieces = [];
 
-    for (let i = 0; i < 120; i++) {
+    for (var i = 0; i < 120; i++) {
         pieces.push({
             x: Math.random() * canvas.width,
             y: Math.random() * -canvas.height,
@@ -134,7 +118,7 @@ function launchConfetti() {
 
     function update() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        pieces.forEach(p => {
+        pieces.forEach(function(p) {
             ctx.fillStyle = p.color;
             ctx.fillRect(p.x, p.y, p.size, p.size);
             p.y += p.speed;
@@ -149,31 +133,27 @@ function launchConfetti() {
     update();
 }
 
-// Фоновые звёздочки
 function animateFloatingImages() {
-    const container = document.getElementById("floatingImages");
-    const imgSources = [STAR_IMAGE];
-    const count = 25;
+    var container = document.getElementById("floatingImages");
+    var count = 25;
 
-    for (let i = 0; i < count; i++) {
-        const img = document.createElement("img");
-        img.src = imgSources[0];
-        img.classList.add("float-img");
+    for (var i = 0; i < count; i++) {
+        var img = document.createElement("img");
+        img.src = STAR_IMAGE;
+        img.className = "float-img";
 
         img.style.left = Math.random() * window.innerWidth + "px";
         img.style.top = Math.random() * window.innerHeight + "px";
 
         container.appendChild(img);
 
-        let angle = Math.random() * Math.PI * 2;
-        let amplitude = 5 + Math.random() * 5;
+        var state = { angle: Math.random() * Math.PI * 2, amplitude: 5 + Math.random() * 5 };
 
         function float() {
-            angle += 0.02;
-            img.style.transform = `translateX(${Math.sin(angle) * amplitude}px)`;
+            state.angle += 0.02;
+            img.style.transform = "translateX(" + (Math.sin(state.angle) * state.amplitude) + "px)";
             requestAnimationFrame(float);
         }
-
         float();
     }
 }

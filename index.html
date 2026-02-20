@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>23 февраля</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -10,20 +10,20 @@
 
   <div class="floating-images" id="floatingImages"></div>
 
-  <button type="button" class="tap-btn" id="tapBtn" onclick="openGift(); return false;">
-    <div class="container">
+  <div class="container" id="giftContainer">
       <div class="top-text-wrap">
         <p class="open-text" id="openText">Открой!</p>
         <p class="tap-text" id="tapText">тыкай!</p>
       </div>
       <div class="gift-box" id="giftBox">
-        <img src="images/korobka.jpg" id="boxImage" alt="Подарок">
+          <img src="images/korobka.jpg" id="boxImage" alt="Подарок">
       </div>
       <div class="message hidden" id="message">
-        <p>Поздравляем наших дорогих парней с 23 февраля!</p>
+          <p>Поздравляем наших дорогих парней с 23 февраля!</p>
       </div>
-    </div>
-  </button>
+  </div>
+
+  <canvas id="confetti"></canvas>
 
   <script src="script.js"></script>
 </body>
