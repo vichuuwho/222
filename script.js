@@ -100,14 +100,18 @@ function openGift() {
     }, 2500); // совпадает с длительностью shake-intensify
 }
 
-// Клик и тап — на сам контейнер (как было до мобильных правок)
-const giftContainer = document.getElementById("giftContainer");
-giftContainer.addEventListener("click", openGift);
-giftContainer.addEventListener("touchstart", openGift, { passive: true });
+// Клик и тап — на body, чтобы ловить касания в любом месте экрана
+document.body.addEventListener("click", openGift);
+document.body.addEventListener("touchstart", openGift, { passive: true });
 
-// Конфетти
+// Конфетти — создаём canvas только при открытии, чтобы не блокировать клики
 function launchConfetti() {
-    const canvas = document.getElementById("confetti");
+    let canvas = document.getElementById("confetti");
+    if (!canvas) {
+        canvas = document.createElement("canvas");
+        canvas.id = "confetti";
+        document.body.appendChild(canvas);
+    }
     const ctx = canvas.getContext("2d");
 
     function resizeCanvas() {
