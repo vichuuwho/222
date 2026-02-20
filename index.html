@@ -8,22 +8,22 @@
 </head>
 <body>
 
-  <div class="tap-overlay" id="tapOverlay"></div>
-
   <div class="floating-images" id="floatingImages"></div>
 
-  <div class="container" id="giftContainer">
+  <button type="button" class="tap-btn" id="tapBtn" onclick="openGift(); return false;">
+    <div class="container">
       <div class="top-text-wrap">
-          <p class="open-text" id="openText">Открой!</p>
-          <p class="tap-text" id="tapText">тыкай!</p>
+        <p class="open-text" id="openText">Открой!</p>
+        <p class="tap-text" id="tapText">тыкай!</p>
       </div>
       <div class="gift-box" id="giftBox">
-          <img src="images/korobka.jpg" id="boxImage" alt="Подарок">
+        <img src="images/korobka.jpg" id="boxImage" alt="Подарок">
       </div>
       <div class="message hidden" id="message">
-          <p>Поздравляем наших дорогих парней с 23 февраля!</p>
+        <p>Поздравляем наших дорогих парней с 23 февраля!</p>
       </div>
-  </div>
+    </div>
+  </button>
 
   <script src="script.js"></script>
 </body>

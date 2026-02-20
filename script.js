@@ -41,7 +41,7 @@ function launchStars(centerX, centerY, count = 15) {
     });
 }
 
-function openGift() {
+window.openGift = function openGift() {
     const box = document.getElementById("giftBox");
     const rect = box.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -98,15 +98,8 @@ function openGift() {
         launchConfetti();
         animateFloatingImages();
     }, 2500); // совпадает с длительностью shake-intensify
-}
+};
 
-// Клик и тап — полноэкранный overlay поверх всего
-(function() {
-    var overlay = document.getElementById("tapOverlay");
-    if (!overlay) return;
-    overlay.addEventListener("click", openGift);
-    overlay.addEventListener("touchstart", openGift, { passive: true });
-})();
 
 // Конфетти — создаём canvas только при открытии, чтобы не блокировать клики
 function launchConfetti() {
