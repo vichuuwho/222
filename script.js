@@ -100,20 +100,10 @@ function openGift() {
     }, 2500); // совпадает с длительностью shake-intensify
 }
 
-// Клик / тап — делегирование на document, чтобы точно ловить события
+// Клик и тап — на сам контейнер (как было до мобильных правок)
 const giftContainer = document.getElementById("giftContainer");
-let lastOpenTime = 0;
-
-function handleOpen(e) {
-    if (!giftContainer.contains(e.target)) return;
-    const now = Date.now();
-    if (now - lastOpenTime < 350) return;
-    lastOpenTime = now;
-    openGift();
-}
-
-document.addEventListener("click", handleOpen);
-document.addEventListener("touchstart", handleOpen, { passive: true });
+giftContainer.addEventListener("click", openGift);
+giftContainer.addEventListener("touchstart", openGift, { passive: true });
 
 // Конфетти
 function launchConfetti() {
