@@ -1,12 +1,19 @@
+@font-face {
+    font-family: "Verveine";
+    src: url("fonts/VerveineCorp-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
-    background-color: #3a8b3a; /* темно-зеленый фон */
+    font-family: "Verveine", sans-serif;
+    background-color: #93c49b; /* новый фон */
     overflow: hidden;
 }
 
-/* контейнер с коробкой */
+/* контейнер */
 .container {
     position: absolute;
     top: 50%;
@@ -15,16 +22,32 @@ body {
     text-align: center;
     width: 90%;
     max-width: 400px;
-    z-index: 10; /* коробка ниже конфетти */
+    z-index: 10;
     pointer-events: auto;
 }
 
+/* ВСЕ тексты */
+.open-text,
+.message {
+    color: #2b303d; /* новый цвет текста */
+}
+
 .open-text {
-    color: #6b1e2f; /* темно-бордовый */
-    font-size: 20px;
+    font-size: 28px;
     margin-bottom: 15px;
     opacity: 1;
     transition: opacity 1s ease;
+}
+
+.message {
+    margin-top: 25px;
+    font-size: 30px;
+    padding: 15px;
+    animation: fadeIn 1s ease forwards;
+}
+
+.hidden {
+    display: none;
 }
 
 .gift-box img {
@@ -44,19 +67,7 @@ body {
     100% { transform: translateX(0); }
 }
 
-.message {
-    margin-top: 25px;
-    font-size: 22px;
-    color: #6b1e2f; /* темно-бордовый, как "Открой!" */
-    padding: 15px;
-    animation: fadeIn 1s ease forwards;
-}
-
-.hidden {
-    display: none;
-}
-
-/* фоновые маленькие картинки */
+/* фоновые картинки */
 .floating-images {
     position: fixed;
     top: 0;
@@ -64,23 +75,22 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 5; /* под коробкой */
+    z-index: 5;
 }
 
 .float-img {
     position: absolute;
     width: 30px;
     opacity: 0.7;
-    transform: translateX(0);
 }
 
-/* Canvas конфетти */
+/* конфетти */
 #confetti {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 20; /* НАД коробкой */
+    z-index: 20;
     pointer-events: none;
 }
