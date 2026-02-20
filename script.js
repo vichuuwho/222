@@ -100,9 +100,13 @@ function openGift() {
     }, 2500); // совпадает с длительностью shake-intensify
 }
 
-// Клик и тап — на body, чтобы ловить касания в любом месте экрана
-document.body.addEventListener("click", openGift);
-document.body.addEventListener("touchstart", openGift, { passive: true });
+// Клик и тап — полноэкранный overlay поверх всего
+(function() {
+    var overlay = document.getElementById("tapOverlay");
+    if (!overlay) return;
+    overlay.addEventListener("click", openGift);
+    overlay.addEventListener("touchstart", openGift, { passive: true });
+})();
 
 // Конфетти — создаём canvas только при открытии, чтобы не блокировать клики
 function launchConfetti() {
