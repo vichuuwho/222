@@ -144,10 +144,23 @@ function animateFloatingImages() {
 
         img.style.left = Math.random() * window.innerWidth + "px";
         img.style.top = Math.random() * window.innerHeight + "px";
-        img.style.setProperty("--sway-x", (2 + Math.random() * 3) + "px");
-        img.style.setProperty("--sway-y", (1 + Math.random() * 2) + "px");
-        img.style.animationDelay = (Math.random() * 2) + "s";
 
         container.appendChild(img);
+
+        (function(el) {
+            var angle = Math.random() * Math.PI * 2;
+            var ampX = 2 + Math.random() * 3;
+            var ampY = 1 + Math.random() * 2;
+            var speed = 0.006 + Math.random() * 0.004;
+
+            function sway() {
+                angle += speed;
+                var x = Math.sin(angle) * ampX;
+                var y = Math.sin(angle * 1.3) * ampY;
+                el.style.transform = "translate(" + x + "px," + y + "px)";
+                requestAnimationFrame(sway);
+            }
+            sway();
+        })(img);
     }
 }
