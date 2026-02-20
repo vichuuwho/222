@@ -16,8 +16,7 @@ body {
     font-family: "VerveineCorp", sans-serif;
     background-color: #93c49b;
     overflow: hidden;
-    /* Фоновая картинка — замени путь на свой: url("images/background.jpg") */
-    background-image: url("images/background.jpg");
+    background-image: url("images/back_total.PNG");
     background-size: cover;
     background-position: center;
     position: relative;
