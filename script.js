@@ -1,4 +1,5 @@
 let opened = false;
+let isOpening = false; // коробка ещё трясётся перед открытием
 const STAR_IMAGE = "images/star.png"; // Замени на свою картинку звёздочки
 
 // Вылет звёздочек из точки (centerX, centerY)
@@ -41,23 +42,28 @@ function launchStars(centerX, centerY, count = 15) {
 }
 
 function openGift() {
-    if (opened) {
-        // Уже открыта — тряска + звёзды
-        const box = document.getElementById("giftBox");
-        const rect = box.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
+    const box = document.getElementById("giftBox");
+    const rect = box.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
 
+    if (opened) {
+        if (isOpening) {
+            // Коробка ещё трясётся — только звёзды, тряску не трогаем
+            launchStars(centerX, centerY, 10);
+            return;
+        }
+        // Полностью открыта — тряска + звёзды
         box.classList.remove("shake-burst");
-        void box.offsetWidth; // reflow
+        void box.offsetWidth;
         box.classList.add("shake-burst");
         launchStars(centerX, centerY, 10);
-
         setTimeout(() => box.classList.remove("shake-burst"), 500);
         return;
     }
 
     opened = true;
+    isOpening = true;
 
     const box = document.getElementById("giftBox");
     const image = document.getElementById("boxImage");
@@ -68,6 +74,7 @@ function openGift() {
     box.classList.add("shake-intensify");
 
     setTimeout(() => {
+        isOpening = false;
         box.classList.remove("shake-intensify");
 
         // "выпрыгивание"
@@ -84,6 +91,8 @@ function openGift() {
         }, 150);
 
         openText.style.opacity = 0;
+        const tapText = document.getElementById("tapText");
+        setTimeout(() => tapText.classList.add("visible"), 1100);
         message.classList.remove("hidden");
 
         launchConfetti();
