@@ -65,7 +65,7 @@ function openGift() {
 
         image.style.transform = "scale(1.4)";
         setTimeout(function() {
-            image.src = "images/open.jpg";
+            image.src = "images/open.PNG";
             image.style.transform = "scale(1)";
 
             rect = box.getBoundingClientRect();
